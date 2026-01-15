@@ -24,10 +24,11 @@ async function bootstrap() {
   // Global prefix
   app.setGlobalPrefix('api');
 
-  // Swagger documentation
   const config = new DocumentBuilder()
-    .setTitle('NestJS API')
-    .setDescription('NestJS v11 API Template with Supabase Auth + Database, Throttling, and Caching')
+    .setTitle('Chatbot Clone API')
+    .setDescription(
+      'Chatbot clone API for the Turing Technologies hiring test, built with NestJS v11, Supabase Auth, Postgres, throttling, and caching',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -41,4 +42,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-

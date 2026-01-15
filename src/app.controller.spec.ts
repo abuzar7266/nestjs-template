@@ -15,9 +15,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Welcome to NestJS v11 API Template!"', () => {
-      expect(appController.getHello()).toBe('Welcome to NestJS v11 API Template!');
+    it('should return "Welcome to the Chatbot Clone API for the Turing Technologies hiring test!"', () => {
+      expect(appController.getHello()).toBe(
+        'Welcome to the Chatbot Clone API for the Turing Technologies hiring test!',
+      );
     });
   });
 });
-

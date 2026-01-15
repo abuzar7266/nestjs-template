@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { Request } from 'express';
 
 @Injectable()
 export class ThrottlerBehindProxyGuard extends ThrottlerGuard {
@@ -11,4 +10,3 @@ export class ThrottlerBehindProxyGuard extends ThrottlerGuard {
     return forwardedFor || ip;
   }
 }
-

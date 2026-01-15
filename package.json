@@ -1,7 +1,7 @@
 {
-  "name": "nestjs-template",
+  "name": "chatbot-clone-api",
   "version": "1.0.0",
-  "description": "NestJS v11 Template with MongoDB, Throttling, and Caching",
+  "description": "Chatbot clone API for Turing Technologies hiring test (NestJS v11, Supabase, Postgres, throttling, caching)",
   "author": "",
   "private": true,
   "license": "MIT",

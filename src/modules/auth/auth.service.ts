@@ -89,12 +89,12 @@ export class AuthService {
     // If JWT check failed or skipped (short token), try OTP flow
     if (!userId) {
       // Allow accessToken to be used as OTP token if it's short
-      const tokenToVerify = (accessToken && accessToken.length <= 20) ? accessToken : token;
-      
+      const tokenToVerify = accessToken && accessToken.length <= 20 ? accessToken : token;
+
       if (tokenToVerify && email) {
         const verifyType =
-          type && ['signup', 'email', 'magiclink', 'recovery', 'invite'].includes(type) 
-            ? (type as any) 
+          type && ['signup', 'email', 'magiclink', 'recovery', 'invite'].includes(type)
+            ? (type as any)
             : 'signup'; // Default to signup if type is missing/empty
 
         const { data, error } = await supabase.auth.verifyOtp({
@@ -109,8 +109,8 @@ export class AuthService {
         userId = data?.user?.id;
         userEmail = data?.user?.email || email;
       } else {
-         // Only throw if we had no valid JWT AND no valid OTP params
-         throw new UnauthorizedException('Invalid or expired token');
+        // Only throw if we had no valid JWT AND no valid OTP params
+        throw new UnauthorizedException('Invalid or expired token');
       }
     }
 
@@ -160,4 +160,3 @@ export class AuthService {
     };
   }
 }
-

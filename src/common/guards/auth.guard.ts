@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { SupabaseService } from '../../supabase/supabase.service';
@@ -17,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     console.log('🛡️ AuthGuard - Hello auth happening!');
-    
+
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -43,8 +38,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Invalid or expired token');
     }
 
-    const roles =
-      (data.user.app_metadata as any)?.roles ?? (data.user.user_metadata as any)?.roles;
+    const roles = (data.user.app_metadata as any)?.roles ?? (data.user.user_metadata as any)?.roles;
 
     request.user = {
       id: data.user.id,
@@ -60,4 +54,3 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 }
-

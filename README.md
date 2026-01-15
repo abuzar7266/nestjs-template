@@ -1,6 +1,6 @@
-# NestJS v11 Template
+# Chatbot Clone API (NestJS v11)
 
-A production-ready NestJS v11 template with **Supabase Auth + Supabase Database (Postgres)**, Throttling, Caching, and authentication decorators.
+A NestJS v11 backend for a chatbot clone API used for the Turing Technologies hiring test, with **Supabase Auth + Supabase Database (Postgres)**, Throttling, Caching, and authentication decorators.
 
 ## 🚀 Features
 
@@ -90,12 +90,12 @@ nestjs-template/
 ### Prerequisites
 
 - Node.js v20 or higher
-- MongoDB (local or Docker)
+- Supabase project with Postgres database (or a compatible Postgres instance)
 - npm, yarn, or pnpm
 
 ### Setup
 
-1. **Clone or copy this template**
+1. **Clone this repository**
 
 2. **Install dependencies**
    ```bash
@@ -105,31 +105,39 @@ nestjs-template/
 3. **Configure environment variables**
    ```bash
    # Create .env file (copy from .env.example or create manually)
-   # Required: MONGODB_URI must be set
+   # Required: Supabase env vars (SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_DB_URL)
    ```
    
    Create `.env` file with your configuration:
    ```env
+   # Required (Supabase)
+   SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+   SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+   SUPABASE_DB_URL=postgresql://USER:PASSWORD@HOST:5432/postgres
+   SUPABASE_REDIRECT_URL=http://localhost:3000/api/auth/verify-email
+
+   # App
    NODE_ENV=development
    PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/nestjs_template
+
+   # Throttling
    THROTTLE_TTL=60
    THROTTLE_LIMIT=10
+
+   # Cache
    CACHE_TTL=300
    CACHE_MAX=100
    ```
    
-   **⚠️ Important:** The application will fail to start if required environment variables are missing. Currently, `MONGODB_URI` is required.
-
-4. **Start MongoDB** (if running locally)
-   ```bash
-   # Using Docker
-   docker run -d -p 27017:27017 --name mongodb mongo:7
-   
-   # Or use your local MongoDB installation
+   Optional JWT configuration for custom usage:
+   ```env
+   JWT_SECRET=super-secret
+   JWT_EXPIRES_IN=1d
    ```
+   
+   **⚠️ Important:** The application will fail to start if required environment variables are missing. At minimum, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_DB_URL` must be set.
 
-5. **Run the application**
+4. **Run the application**
    ```bash
    # Development mode
    npm run start:dev
@@ -390,9 +398,12 @@ All configuration is managed through environment variables. See `.env.example` f
 The application validates required environment variables at startup. If any required variable is missing, the application will fail to start with a clear error message.
 
 **Required Variables:**
-- `MONGODB_URI` - MongoDB connection string (required)
+- `SUPABASE_URL` - Supabase project URL (required)
+- `SUPABASE_ANON_KEY` - Supabase anon public key (required)
+- `SUPABASE_DB_URL` - Supabase Postgres connection string (required)
 
 **Optional Variables:**
+- `SUPABASE_REDIRECT_URL` - Redirect URL for email verification (default: `http://localhost:3000/api/auth/verify-email`)
 - `NODE_ENV` - Environment (default: `development`)
 - `PORT` - Server port (default: `3000`)
 - `THROTTLE_TTL` - Throttle time window in seconds (default: `60`)
