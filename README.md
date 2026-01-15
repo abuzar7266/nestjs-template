@@ -268,53 +268,6 @@ Use the `accessToken` in the `Authorization` header for protected routes:
 Authorization: Bearer <accessToken>
 ```
 
-## 🗄️ MongoDB Usage
-
-### Creating a Schema
-
-```typescript
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
-@Schema({ timestamps: true })
-export class User {
-  @Prop({ required: true })
-  name: string;
-  
-  @Prop({ unique: true })
-  email: string;
-}
-
-export const UserSchema = SchemaFactory.createForClass(User);
-```
-
-### Using in Module
-
-```typescript
-@Module({
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
-  ],
-})
-export class UserModule {}
-```
-
-### Using in Service
-
-```typescript
-@Injectable()
-export class UserService {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<User>
-  ) {}
-  
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = new this.userModel(createUserDto);
-    return user.save();
-  }
-}
-```
-
 ## ⚡ Throttling
 
 Throttling is configured globally. Configure limits in `.env`:
@@ -423,7 +376,7 @@ If validation fails, you'll see an error like:
 ❌ Environment validation failed!
 
 Missing or invalid environment variables:
-MONGODB_URI should not be empty
+SUPABASE_DB_URL should not be empty
 
 Please check your .env file and ensure all required variables are set.
 See .env.example for reference.
@@ -437,8 +390,9 @@ See .env.example for reference.
 - `@nestjs/platform-express` - Express platform adapter
 
 ### Database
-- `@nestjs/mongoose` - MongoDB integration
-- `mongoose` - MongoDB ODM
+- `@nestjs/typeorm` - TypeORM integration for Postgres
+- `typeorm` - Data mapper ORM
+- `pg` - PostgreSQL driver
 
 ### Features
 - `@nestjs/config` - Configuration management
@@ -452,7 +406,7 @@ See .env.example for reference.
 
 ## 🤝 Contributing
 
-This is a template project. Feel free to customize it according to your needs.
+This is the backend for a chatbot clone API used in the Turing Technologies hiring test. Feel free to customize it according to your needs.
 
 ## 📄 License
 
@@ -460,12 +414,12 @@ MIT
 
 ## 🎯 Next Steps
 
-1. Implement actual authentication logic in guards
-2. Add JWT token generation and validation
-3. Create user management module
-4. Add database migrations if needed
-5. Set up CI/CD pipeline
-6. Add more feature modules as needed
+1. Implement chatbot conversation endpoints (create chat, send message, list messages)
+2. Persist users and chat history in Supabase Postgres using TypeORM entities
+3. Integrate your LLM provider in a dedicated service and wire it into chat flows
+4. Add rate-limiting and logging tailored to chatbot usage (per user/IP)
+5. Expand test coverage for main chatbot flows (auth, chat, errors)
+6. Set up CI/CD for running lint/tests and deploying the API
 
 ---
 
