@@ -23,7 +23,6 @@ export class ExampleController {
   constructor(private readonly exampleService: ExampleService) {}
 
   @Get()
-  @Public()
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(60)
   @ApiOperation({ summary: 'Get all examples' })
@@ -33,7 +32,6 @@ export class ExampleController {
   }
 
   @Get(':id')
-  @Public()
   @UseInterceptors(CacheInterceptor)
   @CacheKey('example')
   @CacheTTL(60)

@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AUTH_KEY } from '../decorators/auth.decorator';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { SupabaseService } from '../../supabase/supabase.service';
 
@@ -25,15 +24,6 @@ export class AuthGuard implements CanActivate {
     ]);
 
     if (isPublic) {
-      return true;
-    }
-
-    const requiredAuth = this.reflector.getAllAndOverride<string[]>(AUTH_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-
-    if (!requiredAuth) {
       return true;
     }
 
@@ -65,7 +55,6 @@ export class AuthGuard implements CanActivate {
 
     console.log('🔍 Authenticated via Supabase', {
       userId: data.user.id,
-      requiredAuth,
     });
 
     return true;
